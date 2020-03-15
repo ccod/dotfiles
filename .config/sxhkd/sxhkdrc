@@ -1,0 +1,55 @@
+#
+# wm independent hotkeys
+#
+
+##
+# Normal applications
+##
+
+# check time and battery
+super + a
+    stat_check
+
+# terminal emulator
+super + Return
+    $TERMINAL
+
+# open browser
+super + f
+    $BROWSER
+
+# gotta get my emacs on
+super + e
+    emacs
+
+super + d
+    dmenu_run -p "run: " -l 5
+
+# quit/restart bspwm
+super + alt + {q,r}
+    bspc {quit,wm -r}
+
+# close and kill
+super + {_,shift + }q
+    bspc node -{c,k}
+
+# focus the node in the given direction
+# or move focused node with shift
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# expand a window by moving one of its side outward
+super + shift + {y,u,i,o}
+	bspc node -z {right -20 0,bottom 0 20,bottom 0 -20,right 20 0}
+
+# swap the current node and the biggest local node
+super + space
+	bspc node -s biggest.local || bspc node -s next.local
+
+# set the window state
+super + {t,shift + f}
+    bspc node -t {tiled, fullscreen}
+
+# focus or send to a given desktop
+super + {_,shift + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,0}'
