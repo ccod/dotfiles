@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# install aur client
+mkdir ~/packages
+git clone https://aur.archlinux.org/yay.git ~/packages/
+git clone https://github.com/ccod/st.git ~/packages/
+git clone https://github.com/ccod/dmenu.git ~/packages/
+git clone https://github.com/adi1090x/slim_themes.git ~/packages/
+
+# installing doom emacs, there shouldn't be anything important here
+rm -rf ~/.emacs.d
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+
+cp -R ~/packages/slim_themes/themes/* /usr/share/slim/themes/
+## change theme from default to typogin
+#  nvim /etc/slim.conf   
+
+
+cp -r ../.doom.d ~/
+~/.emacs.d/bin/doom install
+
+# assuming the install worked out
+
+cd ~/packages/st
+make
+make install
+
+cd ~/packages/dmenu
+make
+make install

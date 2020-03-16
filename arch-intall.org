@@ -1,0 +1,155 @@
+#+TITLE: arch-intall
+
+TODO: i think there are a couple awk | sed commands that would be useful
+
+* TODO Encrypted Drive Arch Install
+
+* Introduction
+Most of what I am describing is detailed here: [[https://wiki.archlinux.org/index.php/installation_guide][Arch Install]]
+These are basically notes on what I did to acheive the system I wanted.
+
+* Initial Check
+- There is a step for loading the correct keyboard, but the default works for me
+- Check internet connection is working
+  - ping google.com
+- set the clock
+  - timedatectl set-ntp true
+- if you arn't sure if you need an efi boot setup (machines I am looking at do)
+  - ls /sys/firmware/efi/efivars
+
+* Settup Disk
+** Sysemdb-boot disk setup (for EFI)
+- lsblk: Identify your hard drive
+- fdisk /dev/sd{letter}
+  - d: delete a few times to delete current partitions
+
+  - n: add a new partition
+    remember to enter twice before entering partition size
+    1 260M boot EFI System Partition
+    2 2-4G swap Linux Swap
+    3 15G  root Linux
+    4 rest home Linux
+    # you can merge root and home if you want
+
+  - t: set the partition types
+    (L lists them, but they seem to be different on different machines)
+
+- format partitions
+  mkfs.ext4 /dev/sd{letter}3
+  mkfs.ext4 /dev/sd{letter}4
+  mkfs.vfat -F32 /dev/sd{letter}1
+  mkswap /dev/sd{letter}2
+  swapon
+
+- mount your partitions
+    mount  /dev/sd{letter}3 /mnt
+    mkdir  /mnt/boot
+    mkdir  /mnt/home
+    mount  /dev/sd{letter}1 /mnt/boot
+    mount  /dev/sd{letter}4 /mnt/home
+
+** Grub disk setup (Boot from BIOS)
+Optionally you can split your root partition to root and home,
+but in this instance I didn't really care to.
+- lsblk: Identify your hard drive
+- fdisk /dev/sd{letter}
+  - d: delete a few times to delete current partitions
+
+  - n: add a new partition
+    remember to enter twice before entering partition size
+    2 2-4G swap Linux Swap
+    4 rest root Linux
+
+  - t: set the partition types
+    (L lists them, but they seem to be different on different machines)
+
+- mount your partitions
+    mount  /dev/sd{letter}2 /mnt
+    mkswap /dev/sd{letter}1
+    swapon
+
+* Bootstrap
+pacstrap /mnt base base-devel linux linux-firmware neovim dhcpcd
+- add grub if you are going to use grub as your installer (Boot from BIOS)
+- if you are using EFI, then systemd-boot will be fine and already included
+
+gensftab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+
+* BootLoader Notes
+** Systemd-boot
+use systemd-boot to take care of this step
+you can find the documentation here: [[https://https://wiki.archlinux.org/index.php/Systemd-boot][systemd-boot]]
+
+- bootctl --path=/boot install
+
+make these changes to the boot directory:
+touch /boot/loader/loader.conf /boot/loader/entries/arch.conf
+what it should look like: [[./loader.conf][loader.conf]] [[./arch.conf][arch.conf]]
+
+to get UUID into arch-conf
+- awk '/sd{letter}{number}/{getline; print $0}' /etc/fstab >> /boot/loader/entries/arch.conf
+ 
+
+NOTE: remember plymouth configuration
+
+** Grub
+use this when you are testing on virtualbox
+you can find the documentation here: [[https://wiki.archlinux.org/index.php/GRUB][Grub]]
+
+for default installation of grub from BIOS:
+- grub-install --target=i386-pc /dev/sd{letter}
+- grub-mkconfig -o /boot/grub/grub.cfg
+
+* Prepping To Verify Bootloader
+Try to handle this as early as possible.
+better to have the early success of working from
+Arch, and smoke testing any early issues
+
+- passwd                     ## set root password
+- systemctl enable dhcpcd    ## keep ethernet connection
+- exit                       ## need to chroot out before reboot
+- reboot
+
+If everything worked out alright, it should drop you into a login prompt.
+username: root
+password: {root passwd entered in the previous step}
+
+* Initial Config
+- nvim /etc/locale.gen # uncomment en_US.UFT-8 UTF8
+- echo LANG=en_US.UTF-8 >> /etc/locale.conf
+- locale-gen
+- echo LispBox >> /etc/hostname
+- ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+  ## might be different for you, but I am east coast US
+
+* User Installation
+TODO: add sudo pacman
+run commands:
+- pacman -S sudo
+- useradd -m {username}
+- passwd {username}
+- usermod -aG wheel,audio,video,optical,storage {username}
+- EDITOR=nvim visudo ## scroll down and uncomment wheel permissions
+
+* User space install install
+logout and login as user
+- sudo pacman -S git
+
+** bspwm install (only one, currently)
+Note:
+  remember to chmod +x bspwmrc and remaps
+  xprop is a useful command in bspwm
+  workspaces are saved here: ~/.emacs.d/.local/etc/workspaces/_workspaces
+
+TODO:
+  install: javascript rust clojure sbscl go ruby (rbenv)
+  also: docker aws-cli
+  sort out how to use mermaidjs (text to graphic)
+
+  Krita (maybe Gimp)
+  Blender
+  yay Discord
+  yay Slack
+  yay Spotify
+  yay -S lemonbar-xft-git
