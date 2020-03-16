@@ -1,0 +1,12 @@
+#! /bin/sh
+
+basedir=$(dirname "$0")
+
+install_aur_client() {
+    cd $HOME/packages/yay
+    makepkg -si --noconfirm
+}
+
+
+install_aur_client
+yay -S < $basename/aurpkglist.txt

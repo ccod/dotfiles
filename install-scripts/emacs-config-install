@@ -1,0 +1,13 @@
+#! /bin/sh
+
+basedir=$(dirname "$0")
+
+install_emacs_config() {
+    # hopefully nothing important in here
+    rm -rf $HOME/.emacs.d
+    git clone https://github.com/hlissner/doom-emacs $HOME/.emacs.d
+    cp -r $basedir/../.doom.d $HOME/
+    $HOME/.emacs.d/bin/doom install
+}
+
+install_emacs_config
