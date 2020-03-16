@@ -11,11 +11,11 @@ These are basically notes on what I did to acheive the system I wanted.
 * Initial Check
 - There is a step for loading the correct keyboard, but the default works for me
 - Check internet connection is working
-  - ping google.com
+  `ping google.com`
 - set the clock
-  - timedatectl set-ntp true
+  `timedatectl set-ntp true`
 - if you arn't sure if you need an efi boot setup (machines I am looking at do)
-  - ls /sys/firmware/efi/efivars
+  `ls /sys/firmware/efi/efivars`
 
 * Settup Disk
 ** Sysemdb-boot disk setup (for EFI)
@@ -24,29 +24,37 @@ These are basically notes on what I did to acheive the system I wanted.
   - d: delete a few times to delete current partitions
 
   - n: add a new partition
+
     remember to enter twice before entering partition size
+
+    ```
     1 260M boot EFI System Partition
     2 2-4G swap Linux Swap
     3 15G  root Linux
     4 rest home Linux
     # you can merge root and home if you want
+    ```
 
   - t: set the partition types
     (L lists them, but they seem to be different on different machines)
 
 - format partitions
+  ```
   mkfs.ext4 /dev/sd{letter}3
   mkfs.ext4 /dev/sd{letter}4
   mkfs.vfat -F32 /dev/sd{letter}1
   mkswap /dev/sd{letter}2
   swapon
+  ```
 
 - mount your partitions
+  ```
     mount  /dev/sd{letter}3 /mnt
     mkdir  /mnt/boot
     mkdir  /mnt/home
     mount  /dev/sd{letter}1 /mnt/boot
     mount  /dev/sd{letter}4 /mnt/home
+  ```
 
 ** Grub disk setup (Boot from BIOS)
 Optionally you can split your root partition to root and home,
