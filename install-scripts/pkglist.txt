@@ -98,4 +98,5 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 zsh
+discord
 rsync
