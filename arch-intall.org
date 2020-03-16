@@ -12,12 +12,16 @@ These are basically notes on what I did to acheive the system I wanted.
 * Initial Check
 - There is a step for loading the correct keyboard, but the default works for me
 - Check internet connection is working
-  #+BEGIN_SRC ping google.com #+END_SRC
+  #+BEGIN_SRC bash
+  ping google.com
+  #+END_SRC
 - set the clock
-  #+BEGIN_SRC timedatectl set-ntp true #+END_SRC
+  #+BEGIN_SRC bash
+  timedatectl set-ntp true
+  #+END_SRC
 - if you arn't sure if you need an efi boot setup (machines I am looking at do)
   #+BEGIN_SRC bash
-  `ls /sys/firmware/efi/efivars`
+  ls /sys/firmware/efi/efivars
   #+END_SRC
 
 * Settup Disk
@@ -101,8 +105,9 @@ to get UUID into arch-conf
 #+BEGIN_SRC bash
     awk '/sd{letter}{number}/{getline; print $0}' /etc/fstab >> /boot/loader/entries/arch.conf
 #+END_SRC
+use nvim to insert the UUID where the indicated curly braces are
 
-NOTE: remember plymouth configuration
+TODO: remember plymouth configuration
 
 ** Grub
 use this when you are testing on virtualbox
