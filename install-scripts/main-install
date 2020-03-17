@@ -44,8 +44,8 @@ install_slim_themes() {
 
 # in case files already exist in there from package installation
 install_config() {
-    rsync -a $basedir/../.config $HOME
-    rsync -a $basedir/../.local $HOME
+    /usr/bin/rsync -a $basedir/../.config $HOME
+    /usr/bin/rsync -a $basedir/../.local $HOME
     cp $basedir/../.xinitrc $HOME/
     echo $password | sudo -S cp $basedir/../zshenv /etc/zsh/
 

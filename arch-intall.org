@@ -82,10 +82,12 @@ but in this instance I didn't really care to.
     swapon
 
 * Bootstrap
-pacstrap /mnt base base-devel linux linux-firmware neovim dhcpcd
+#+BEGIN_SRC bash
+    pacstrap /mnt base base-devel linux linux-firmware neovim dhcpcd
+#+END_SRC
 - add grub if you are going to use grub as your installer (Boot from BIOS)
 - if you are using EFI, then systemd-boot will be fine and already included
-#+BEGIN_SRC bash
+,#+BEGIN_SRC bash
     gensftab -U /mnt >> /mnt/etc/fstab
     arch-chroot /mnt
 #+END_SRC
@@ -140,7 +142,7 @@ If everything worked out alright, it should drop you into a login prompt.
     nvim /etc/locale.gen # uncomment en_US.UFT-8 UTF8
     echo LANG=en_US.UTF-8 >> /etc/locale.conf
     locale-gen
-    echo LispBox >> /etc/hostname
+    echo DevBox >> /etc/hostname
     ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 ## might be different for you, but I am east coast US
 #+END_SRC
@@ -158,8 +160,13 @@ run commands:
 
 * User space install install
 logout and login as user
-- sudo pacman -S git
-
+#+BEGIN_SRC bash
+    logout
+    {...login as user}
+    sudo pacman -S git
+    git clone https://github.com/ccod/dotfiles.git
+    cd dotfiles/install-scripts && ./main-install
+#+END_SRC
 ** bspwm install (only one, currently)
 Note:
   - remember to chmod +x bspwmrc and remaps
