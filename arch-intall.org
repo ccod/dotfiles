@@ -165,8 +165,18 @@ logout and login as user
     {...login as user}
     sudo pacman -S git
     git clone https://github.com/ccod/dotfiles.git
-    cd dotfiles/install-scripts && ./main-install
+    cd dotfiles/install-scripts
+    ./main-install
+    ./aur-install
+    ./emacs-config-install
+
+    # script should have enabled docker daemon on startup
+    # now you just need to add docker to your user's groups
+    sudo usermod -aG docker ccod
+    # hopefully everything installed correctly
+    reboot
 #+END_SRC
+
 ** bspwm install (only one, currently)
 Note:
   - remember to chmod +x bspwmrc and remaps
