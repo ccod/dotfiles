@@ -172,7 +172,7 @@ logout and login as user
 
     # script should have enabled docker daemon on startup
     # now you just need to add docker to your user's groups
-    sudo usermod -aG docker ccod
+    sudo usermod -aG docker {username}
     # hopefully everything installed correctly
     reboot
 #+END_SRC
