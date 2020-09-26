@@ -4,12 +4,7 @@
 !! color pink    #fb007a
 *background:                      #f1f1f1
 *foreground:                      #424242
-*fading:                          8
-*fadeColor:                       black
 *cursorColor:                     #f1f1f1
-!! 20bbfc
-*pointerColorBackground:          #2B2C2B
-*pointerColorForeground:          #16A085
 
 !! black dark/light
 *color0:                          #212121
