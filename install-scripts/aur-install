@@ -7,6 +7,5 @@ install_aur_client() {
     makepkg -si --noconfirm
 }
 
-
 install_aur_client
-yay -S lemonbar-xft-git spotify slack-desktop
+yay -S lemonbar-xft-git
