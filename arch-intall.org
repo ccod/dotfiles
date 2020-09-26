@@ -1,13 +1,10 @@
 #+TITLE: arch-intall
 
-TODO: i think there are a couple awk | sed commands that would be useful
-
-* TODO Encrypted Drive Arch Install
-- Still to do, will update later.
-
 * Introduction
 Most of what I am describing is detailed here: [[https://wiki.archlinux.org/index.php/installation_guide][Arch Install]]
-These are basically notes on what I did to acheive the system I wanted.
+These are basically notes on what I did to achieve the system I wanted.
+The priority in this instruction set is to get a system you can boot up into
+first before handling user space setup.
 
 * Initial Check
 - There is a step for loading the correct keyboard, but the default works for me
@@ -29,17 +26,15 @@ These are basically notes on what I did to acheive the system I wanted.
 - lsblk: Identify your hard drive
 - fdisk /dev/sd{letter}
   - d: delete a few times to delete current partitions
-
   - n: add a new partition
 
-    remember to enter twice before entering partition size
+    defaults are fine choosing drive number and starting memory location.
+    defining drive size looks like this "+512M"
 
     #+BEGIN_SRC bash
-        1 260M boot EFI System Partition
-        2 2-4G swap Linux Swap
-        3 15G  root Linux
-        4 rest home Linux
-    # you can merge root and home if you want
+        1 +512M boot EFI System Partition
+        2 +4G   swap Linux Swap
+        3 rest  root Linux (enter to take remaining)
     #+END_SRC
 
   - t: set the partition types
@@ -47,48 +42,24 @@ These are basically notes on what I did to acheive the system I wanted.
 
 - format partitions
   #+BEGIN_SRC bash
-    mkfs.ext4 /dev/sd{letter}3
-    mkfs.ext4 /dev/sd{letter}4
     mkfs.vfat -F32 /dev/sd{letter}1
     mkswap /dev/sd{letter}2
+    mkfs.ext4 /dev/sd{letter}3
+
     swapon
   #+END_SRC
 - mount your partitions
   #+BEGIN_SRC bash
     mount  /dev/sd{letter}3 /mnt
     mkdir  /mnt/boot
-    mkdir  /mnt/home
     mount  /dev/sd{letter}1 /mnt/boot
-    mount  /dev/sd{letter}4 /mnt/home
   #+END_SRC
-** Grub disk setup (Boot from BIOS)
-Optionally you can split your root partition to root and home,
-but in this instance I didn't really care to.
-- lsblk: Identify your hard drive
-- fdisk /dev/sd{letter}
-  - d: delete a few times to delete current partitions
-
-  - n: add a new partition
-    remember to enter twice before entering partition size
-    2 2-4G swap Linux Swap
-    4 rest root Linux
-
-  - t: set the partition types
-    (L lists them, but they seem to be different on different machines)
-
-- mount your partitions
-    mount  /dev/sd{letter}2 /mnt
-    mkswap /dev/sd{letter}1
-    swapon
 
 * Bootstrap
 #+BEGIN_SRC bash
     pacstrap /mnt base base-devel linux linux-firmware neovim dhcpcd
-#+END_SRC
-- add grub if you are going to use grub as your installer (Boot from BIOS)
-- if you are using EFI, then systemd-boot will be fine and already included
-,#+BEGIN_SRC bash
-    gensftab -U /mnt >> /mnt/etc/fstab
+
+    genfstab -U /mnt >> /mnt/etc/fstab
     arch-chroot /mnt
 #+END_SRC
 * BootLoader Notes
@@ -105,21 +76,12 @@ what it should look like: [[./loader.conf][loader.conf]] [[./arch.conf][arch.con
 
 to get UUID into arch-conf
 #+BEGIN_SRC bash
-    awk '/sd{letter}{number}/{getline; print $0}' /etc/fstab >> /boot/loader/entries/arch.conf
+    awk '/sd{letter}3/{getline; print $0}' /etc/fstab >> /boot/loader/entries/arch.conf
 #+END_SRC
-use nvim to insert the UUID where the indicated curly braces are
+use nvim to insert the UUID where the indicated curly braces are in arch.conf example
 
 TODO: remember plymouth configuration
 
-** Grub
-use this when you are testing on virtualbox
-you can find the documentation here: [[https://wiki.archlinux.org/index.php/GRUB][Grub]]
-
-for default installation of grub from BIOS:
-#+BEGIN_SRC bash
-    grub-install --target=i386-pc /dev/sd{letter}
-    grub-mkconfig -o /boot/grub/grub.cfg
-#+END_SRC
 * Prepping To Verify Bootloader
 Try to handle this as early as possible.
 better to have the early success of working from
@@ -137,6 +99,7 @@ If everything worked out alright, it should drop you into a login prompt.
     username: root
     password: {root passwd entered in the previous step}
 #+END_SRC
+
 * Initial Config
 #+BEGIN_SRC bash
     nvim /etc/locale.gen # uncomment en_US.UFT-8 UTF8
@@ -147,7 +110,7 @@ If everything worked out alright, it should drop you into a login prompt.
 ## might be different for you, but I am east coast US
 #+END_SRC
 
-* User Installation
+* User setup
 TODO: add sudo pacman
 run commands:
 #+BEGIN_SRC bash
@@ -158,7 +121,7 @@ run commands:
     EDITOR=nvim visudo ## scroll down and uncomment wheel permissions
 #+END_SRC
 
-* User space install install
+* User space install
 logout and login as user
 #+BEGIN_SRC bash
     logout

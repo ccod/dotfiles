@@ -26,7 +26,7 @@ linux
 linux-firmware
 m4
 make
-neovim
+man-db
 nodejs
 npm
 openssh
@@ -36,10 +36,8 @@ pkgconf
 sed
 slim
 sudo
-surf
 sxhkd
 texinfo
-tmux
 ttf-fira-code
 ttf-font-awesome
 ttf-roboto
@@ -99,6 +97,5 @@ xorg-xwininfo
 xorg-xwud
 docker
 networkmanager
-zsh
 discord
 rsync
