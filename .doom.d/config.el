@@ -6,8 +6,15 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "user"
-      user-mail-address "email")
+(setq user-full-name "Christopher Codrington"
+      user-mail-address "chcodrington@gmail.com")
+
+;; TODO locate a better place for this
+(straight-use-package 'fira-code-mode)
+(require 'fira-code-mode)
+(custom-set-variables '(fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x" "**" "***" "*")))
+(add-hook 'clojure-mode-hook 'fira-code-mode)
+
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -19,27 +26,49 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "FiraCode" :size 12))
+
+(setq doom-font (font-spec :family "Fira Code" :weight 'semi-bold :size 14))
+;; (setq doom-font (font-spec :family "Fira Code Symbol" :size 14))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-tomorrow-night)
+
+(setq doom-theme 'doom-pencil)
+;; (setq doom-theme 'doom-tomorrow-day)
+;; (add-hook 'clojure-mode-hook (lambda () (setq hl-line-mode nil)))
+
+; (set-face-background 'default (doom-color 'gray))
+;; (with-eval-after-load 'doom-tomorrow-day
+;;   (set-face-attribute 'doom-tomorrow-day ))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/"
-      org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "Done(d)" "CANCELLED(c)")))
+      org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-;; Javascript stuff
+;; Getting that Javascript indentation right
 (setq
- js2-basic-offset 2
- js-indent-level 2
- typescript-indent-level 2)
+   js2-basic-offset 2
+   js-indent-level 2
+   typescript-indent-level 2)
+
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.iuml\\'" . plantuml-mode))
+
+;; (load 'projectile)
+;; (after! projectile
+;;   (projectile-register-project-type 'npm '("package.json")
+;;                                     :compile "npm install"
+;;                                     :test "npm test"
+;;                                     :run "npm start"))
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
