@@ -1,0 +1,7 @@
+#!/bin/sh
+
+nmcli device wifi | awk '{ getline; print }' | dmenu -p "Network:" -l 10  | awk '{ print $2 }' | 
+  { read con;
+    pass=$(dmenu -p "Password" -P </dev/null);
+    nmcli dev wifi con $con password $pass
+  }
