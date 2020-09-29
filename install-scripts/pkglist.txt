@@ -101,3 +101,4 @@ discord
 rsync
 tlp
 dunst
+bash-completion
