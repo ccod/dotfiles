@@ -1,5 +1,0 @@
-#!/bin/sh
-
-alias \
-	e="$EDITOR" \
-	se="sudo $EDITOR"

@@ -1,6 +1,0 @@
-PATH="$PATH:$HOME/.local/bin"
-ZSH="$HOME/.config/zsh/.oh-my-zsh"
-TERMINAL="st"
-EDITOR="nvim"
-BROWSER="firefox"
-XDG_CONFIG_HOME="$HOME/.config"

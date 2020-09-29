@@ -99,3 +99,5 @@ docker
 networkmanager
 discord
 rsync
+tlp
+dunst
