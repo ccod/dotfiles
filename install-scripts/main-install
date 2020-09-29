@@ -47,11 +47,6 @@ install_config() {
     /usr/bin/rsync -a $basedir/../.config $HOME
     /usr/bin/rsync -a $basedir/../.local $HOME
     cp $basedir/../.xinitrc $HOME/
-    echo $password | sudo -S cp $basedir/../zshenv /etc/zsh/
-
-    # I use ohmyzsh, this sets the install env
-    export ZSH="$HOME/.config/zsh/.oh-my-zsh"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 enable_systemd_services() {
@@ -59,6 +54,7 @@ enable_systemd_services() {
     echo $password | sudo -S systemctl enable NetworkManager
     echo $password | sudo -S systemctl enable systemd-timesyncd
     echo $password | sudo -S systemctl enable docker
+    echo $password | sudo -S systemctl enable tlp
 }
 
 
