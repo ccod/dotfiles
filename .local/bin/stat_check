@@ -38,6 +38,6 @@ Cal() {
 }
 
 {
-	echo -e "%{c}$(Cal)   $(Clock)%{r}$(Battery)  "
+	echo -e "%{c}$(Clock)%{r}$(Battery)  "
 	sleep 3
-} | lemonbar -d -B "#2d2d2d" -F "#bbbbbb" -f "Fira Code:pixelsize=12" -f "Font Awesome"
+} | lemonbar -d -B "#f1f1f1" -F "#424242" -f "Fira Code:pixelsize=12:style=SemiBold" -f "Font Awesome"
