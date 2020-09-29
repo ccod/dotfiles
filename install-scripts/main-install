@@ -67,6 +67,8 @@ install_dmenu_st_packages
 install_slim_themes
 enable_systemd_services
 install_config
+# There should be a better place to keep this
+pip install neovim
 
 echo -e "\n\n==============================="
 echo -e "== Finished Main Install"
