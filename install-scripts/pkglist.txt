@@ -104,3 +104,5 @@ dunst
 bash-completion
 python-pip
 aws-cli
+alsa-utils
+pulseaudio
