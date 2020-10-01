@@ -27,6 +27,14 @@ Battery() {
 	echo -n "$MSG"
 }
 
+CurrentTask() {
+  task active | awk '{getline;getline;getline;print $1}' | task _get $(</dev/stdin).description |
+    {
+      desc=$(</dev/stdin)
+      [[ ! -z "${desc//}" ]] && echo "%{B#fb007a}%{F#f1f1f1}  $desc  %{F-}%{B-}"
+    }
+}
+
 Clock() {
 	TIME=$(date "+%a %b %d, %T")
 	echo -n "\uf017 $TIME"
@@ -38,6 +46,6 @@ Cal() {
 }
 
 {
-	echo -e "%{c}$(Clock)%{r}$(Battery)  "
+  echo -e "%{c}$(Clock)%{r}$(CurrentTask)     $(Battery)  "
 	sleep 3
 } | lemonbar -d -B "#f1f1f1" -F "#424242" -f "Fira Code:pixelsize=12:style=SemiBold" -f "Font Awesome"

@@ -106,3 +106,4 @@ python-pip
 aws-cli
 alsa-utils
 pulseaudio
+task
