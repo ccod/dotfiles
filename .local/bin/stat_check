@@ -1,7 +1,7 @@
 #! /bin/sh
 
 Battery() {
-	BATPERC=$(acpi --battery | cut -d, -f2 | cut -b"2 3")
+	BATPERC=$(acpi --battery | cut -d, -f2 | sed 's/[^0-9]*//g')
 
 	if [ $BATPERC -lt 101 ]
 	then
