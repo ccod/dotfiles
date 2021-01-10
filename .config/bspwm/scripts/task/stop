@@ -1,0 +1,13 @@
+#! /bin/sh
+
+current=$(task active 2> /dev/null)
+
+if [[ -z $current ]]; then
+  notify-send "Task Warrior" "Can't stop a task not started"
+  exit 1
+else
+  task active |
+    awk '(NR > 3) && (NF > 2) { print $1;exit }' |
+    task stop $(</dev/stdin)
+fi
+

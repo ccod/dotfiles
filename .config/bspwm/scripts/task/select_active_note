@@ -1,0 +1,13 @@
+#! /bin/bash
+
+current=$(task active 2> /dev/null)
+
+if [[ -z $current ]]; then
+  notify-send "Task Warrior" "No active tasks to take notes on"
+  exit 1
+else
+  task active |
+    awk '(NR > 3) && (NF > 2) { print $1;exit }' |
+    $BSPS/task/edit_note
+fi
+

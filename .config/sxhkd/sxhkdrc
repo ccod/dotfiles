@@ -18,12 +18,31 @@ super + Return
 super + f
     $BROWSER
 
-# gotta get my emacs on
-super + e
-    emacs
-
 super + d
     dmenu_run -p "run: " -l 5
+
+# Combining task warrior and dmenu
+super + t; n
+    sh $BSPS/task/new
+
+super + t; s
+    sh $BSPS/task/start
+
+super + t; shift + s
+    sh $BSPS/task/stop
+
+super + t; d
+    sh $BSPS/task/delete
+
+super + t; c
+    sh $BSPS/task/finish
+
+super + t; e
+    sh $BSPS/task/select_note
+
+super + t; shift + e
+    sh $BSPS/task/select_active_note
+
 
 # quit/restart bspwm
 super + alt + {q,r}

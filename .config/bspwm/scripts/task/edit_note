@@ -1,0 +1,23 @@
+#!/bin/bash
+
+EDITOR=nvim
+TASKBIN=task
+EXT=".md"
+FOLDER="$HOME/Notes/Tasks/"
+TASKID=$(</dev/stdin)
+
+#find UUID from given task
+
+uuid=`$TASKBIN $TASKID uuids`
+description=`$TASKBIN _get $TASKID.description`
+
+# build full path & file name to store notes in
+file="$FOLDER$uuid$EXT"
+
+if [[ -f $file ]]; then
+  st -n StTask -e $EDITOR $file +Goyo
+else
+  echo -e "# $description\n\n" >> $file
+  st -n StTask -e $EDITOR $file +Goyo
+fi
+
