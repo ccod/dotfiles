@@ -25,6 +25,10 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'kien/ctrlp.vim'
 Plug 'reedes/vim-colors-pencil'
 Plug 'janko/vim-test'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/goyo.vim'
 
 " PlantUML stuff
 Plug 'tyru/open-browser.vim'

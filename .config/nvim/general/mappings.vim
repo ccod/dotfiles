@@ -25,6 +25,7 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>tt :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tg :TestVisit<CR>
+nmap <silent> <leader>tr :! cargo test<CR>
 
 " habits I am used to from doom emacs
 nmap <silent> <leader>bs :w<CR>
@@ -35,3 +36,14 @@ nmap <silent> <leader>fr :CtrlPClearCache<CR>
 " one off npm scripts
 nmap <silent> <leader>rb :! npm run-script build<CR>
 nmap <silent> <leader>rm :! make<CR>
+
+" run current script... should generalize a bit
+nmap <silent> <leader>rs :! sh %<CR>
+nmap <silent> <leader>rp :! python %<CR>
+nmap <silent> <leader>rr :! cargo run<CR>
+
+" For zen mode
+nmap <silent> <leader>zz :Goyo<CR>
+
+" For running c tests
+nmap <silent> <leader>ct :! make tests<CR>
