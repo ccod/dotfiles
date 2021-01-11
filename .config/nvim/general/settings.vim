@@ -4,6 +4,7 @@ let mapleader=" "
 set nobackup
 set nowritebackup
 set noswapfile
+set clipboard=unnamedplus
 
 set tabstop=2
 set shiftwidth=2
