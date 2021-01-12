@@ -65,9 +65,16 @@ super + shift + {y,u,i,o}
 super + space
 	bspc node -s biggest.local || bspc node -s next.local
 
+# These two are for the purpose of having that left half window
+super + p; i
+    bspc node -i
+
+super + p; k
+    bspc query -N -n .leaf.\!window -d focused | bspc node $(</dev/stdin) -k
+
 # set the window state
-super + {t,shift + f}
-    bspc node -t {tiled, fullscreen}
+super + p; {t, f, p, shift + f}
+    bspc node -t {tiled, fullscreen, pseudo_tiled -z top_right -960 0, floating}
 
 # focus or send to a given desktop
 super + {_,shift + }{1-9,0}
