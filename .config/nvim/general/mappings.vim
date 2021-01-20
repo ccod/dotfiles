@@ -25,7 +25,7 @@ nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>tt :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tg :TestVisit<CR>
-nmap <silent> <leader>tr :! cargo test<CR>
+nmap <silent> <leader>tr :! cargo test -- --nocapture<CR>
 
 " habits I am used to from doom emacs
 nmap <silent> <leader>bs :w<CR>
