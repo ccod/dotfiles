@@ -1,0 +1,19 @@
+CurseForge
+Electron
+dconf
+discord
+kde.org
+ow-electron
+pulse
+session
+yay
+go
+
+nvim/lazy-lock.json
+nushell/history.txt
+nushell/env.nu
+
+systemd/user/default.target.wants
+
+# might change this later when I find myself customizing it
+dolphinrc
