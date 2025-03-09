@@ -39,6 +39,7 @@ return {
 			lspconfig.ccls.setup({ capabilities = capabilities })
 			lspconfig.gopls.setup({ capabilities = capabilities })
 			lspconfig.ols.setup({ capabilities = capabilities })
+			lspconfig.ts_ls.setup({ capabilities = capabilities })
 		end
 	}
 }
